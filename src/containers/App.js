@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 
-import Restaurant from '../components/Restaurant'
+import Select from '../components/Select'
 import Reviews from '../components/Reviews'
 
 import restaurants from '../constants/restaurants'
-import reviews from '../constants/reviews'
+import raceStats from '../constants/raceStats'
 
-import ReviewForm from '../components/ReviewForm'
+import PBCalcForm from '../components/PBCalcForm'
 import AddRestaurantForm from '../components/AddRestaurantForm'
 
 class App extends Component {
@@ -14,8 +14,14 @@ class App extends Component {
     super(props)
     this.state = {
       restaurants,
-      reviews,
-      selectedId: restaurants[0].id
+      raceStats,
+      selectedRace: raceStats[0].race_name,
+      strength: 0,
+      constitution: 0,
+      dexterity: 0,
+      intelligence: 0,
+      wisdom: 0,
+      charisma: 0
     }
     this.restaurantClick = this.restaurantClick.bind(this)
     this.reviewSubmit = this.reviewSubmit.bind(this)
@@ -33,36 +39,43 @@ class App extends Component {
   }
 
   reviewSubmit (submission) {
-    submission.restaurant_id = this.state.selectedId
+    submission.restaurant_id = this.state.selectedRace
     this.setState({ reviews: this.state.reviews.concat(submission) })
   }
 
   render() {
-    let restaurantComponents = restaurants.map((restaurant) => {
-      return (
-        <Restaurant key={restaurant.id}
-          data={restaurant}
-          isSelected={this.state.selectedId === restaurant.id}
-          handleClick={this.restaurantClick}/>
-      )
+
+    let races = []
+
+    raceStats.map((race) => {
+      races.push(race.race_name)
     })
 
-    let relevantReviews = this.state.reviews.filter((review) =>
-      (this.state.selectedId === review.restaurant_id)
-    )
+    let selectedRaceDeets = this.state.raceStats.find(race =>
+      race.race_name === this.state.selectedRace);
+
+    let stats = [
+      "Strength",
+      "Constitution",
+      "Dexterity",
+      "Intelligence",
+      "Wisdom",
+      "Charisma"
+    ]
+
+    let wildcard = ""
+
+    if (selectedRaceDeets.wild) {
+      wildcard = <Select
+      stats = {stats}/>
+    }
 
     return(
       <div>
         <div className="row">
-          <div className="small-3 columns">
-            <h1>Restaurant</h1>
-            {restaurantComponents}
-            <AddRestaurantForm />
-          </div>
           <div className="small-9 columns">
-            <h2>Reviews for {this.selectedRestaurant().name}</h2>
-            <Reviews data={relevantReviews} />
-            <ReviewForm
+            <h2>Point Buy Calculator</h2>
+            <PBCalcForm
             reviewSubmit={this.reviewSubmit}
             restaurant_id={this.state.selectedId}
             />

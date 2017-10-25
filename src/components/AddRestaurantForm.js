@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from './TextField'
 
-class ReviewForm extends React.Component {
+class PBCalcForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -116,4 +116,4 @@ class ReviewForm extends React.Component {
   }
 }
 
-export default ReviewForm;
+export default PBCalcForm;
