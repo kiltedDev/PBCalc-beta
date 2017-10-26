@@ -1,5 +1,15 @@
 const raceStats = [
   {
+    race_name: '',
+    wild: false,
+    strength: 0,
+    constitution: 0,
+    dexterity: 0,
+    intelligence: 0,
+    wisdom: 0,
+    charisma: 0
+  },
+  {
     race_name: 'Dwarf',
     wild: false,
     strength: 0,

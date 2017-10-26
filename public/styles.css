@@ -9,3 +9,7 @@
 .mbl {
   margin-bottom: 20px;
 }
+
+select {
+  width: 10vw;
+}

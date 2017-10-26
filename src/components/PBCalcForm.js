@@ -6,14 +6,24 @@ class ReviewForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      starOptions: ["★","★★","★★★","★★★★","★★★★★"],
       errors: [],
-      nameEntry: "",
-      starSelected: "",
-      textEntry: ""
+      strValue: 0,
+      conValue: 0,
+      dexValue: 0,
+      intValue: 0,
+      wisValue: 0,
+      chaValue: 0,
+      strSelected: "10",
+      conSelected: "10",
+      dexSelected: "10",
+      intSelected: "10",
+      wisSelected: "10",
+      chaSelected: "10",
+      pointTotal: 0
     }
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleStrChange = this.handleStrChange.bind(this);
   }
 
   handleClearForm(event) {
@@ -21,7 +31,6 @@ class ReviewForm extends React.Component {
     this.setState({
       errors: [],
       nameEntry: "",
-      starSelected: "",
       textEntry: ""
     })
   }
@@ -30,12 +39,12 @@ class ReviewForm extends React.Component {
     event.preventDefault();
     if (
       this.validateNameChange(this.state.nameEntry) &&
-      this.validateStarSelection(this.state.starSelected)
+      this.validateStatSelection(this.state.statSelected)
     ) {
       let formPayload = {
         name: this.state.nameEntry,
         content: this.state.textEntry,
-        rating: this.state.starSelected.length*20,
+        rating: this.state.statSelected.length*20,
       };
       this.props.reviewSubmit(formPayload);
       this.handleClearForm(event)
@@ -44,34 +53,14 @@ class ReviewForm extends React.Component {
 
   handleInputChange(event) {
     let name = event.target.name
-    this.setState({ [name]: event.target.value })
+    this.setState({
+      [name]: event.target.value
+      totalPoints: this.state.strValue +  this.state.conValue +  this.state.dexValue +  this.state.intValue +  this.state.wisValue +  this.state.chaValue
+    })
   }
 
-  validateNameChange(name) {
-    if (name === '' || name === ' ') {
-      let newError = { nameEntry: 'Name may not be blank.' }
-      this.setState({ errors: Object.assign(this.state.errors, newError) })
-      return false
-    } else {
-      let errorState = this.state.errors
-      delete errorState.nameEntry
-      this.setState({ errors: errorState })
-      return true
-    }
-  }
 
-  validateStarSelection(selection) {
-    if (selection === '') {
-      let newError = { starSelected: 'You must select a rating.' }
-      this.setState({ errors: Object.assign(this.state.errors, newError) })
-      return false
-    } else {
-      let errorState = this.state.errors
-      delete errorState.starSelected
-      this.setState({ errors: errorState })
-      return true
-    }
-  }
+
 
   render() {
     let errorDiv;
@@ -83,32 +72,87 @@ class ReviewForm extends React.Component {
       errorDiv = <div className="callout alert">{errorItems}</div>
     }
 
+    debugger
+
     return (
       <form onSubmit={this.handleFormSubmit}>
-      <h3>Add A Review</h3>
+      <h3>Calculate Stats</h3>
         {errorDiv}
-        <TextField
-          name="nameEntry"
-          label="Name"
-          className="small-10 columns"
-          handlerFunction={this.handleInputChange}
-          content={this.state.nameEntry}
-        />
-        <Select
-          name='starSelected'
-          label='Stars'
-          className="small-2 columns"
-          handlerFunction={this.handleInputChange}
-          options={this.state.starOptions}
-          selectedOption={this.state.starSelected}
-        />
-        <TextField
-          name="textEntry"
-          className="small-12 columns"
-          label="Review Text"
-          handlerFunction={this.handleInputChange}
-          content={this.state.textEntry}
-        />
+        <table>
+        <tr>
+          <th>Ability</th>
+          <th>Base</th>
+          <th>Racial</th>
+          <th>total</th>
+        </tr>
+        <tr>
+          <td>Strength</td>
+          <td><Select
+            name='strValue'
+            className="small-2 columns"
+            handlerFunction={this.handleInputChange}
+            selectedOption={this.state.strValue}
+          /></td>
+          <td>{this.props.selectedRaceDeets.strength}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Constitution</td>
+          <td><Select
+            name='conValue'
+            className="small-2 columns"
+            handlerFunction={this.handleInputChange}
+            selectedOption={this.state.conValue}
+          /></td>
+          <td>{this.props.selectedRaceDeets.constitution}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Dexterity</td>
+          <td><Select
+            name='dexValue'
+            className="small-2 columns"
+            handlerFunction={this.handleInputChange}
+            selectedOption={this.state.dexValue}
+          /></td>
+          <td>{this.props.selectedRaceDeets.dexterity}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Intelligence</td>
+          <td><Select
+            name='intValue'
+            className="small-2 columns"
+            handlerFunction={this.handleInputChange}
+            selectedOption={this.state.intValue}
+          /></td>
+          <td>{this.props.selectedRaceDeets.intelligence}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Wisdom</td>
+          <td><Select
+            name='wisValue'
+            className="small-2 columns"
+            handlerFunction={this.handleInputChange}
+            selectedOption={this.state.wisValue}
+          /></td>
+          <td>{this.props.selectedRaceDeets.wisdom}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Charisma</td>
+          <td><Select
+            name='chaValue'
+            className="small-2 columns"
+            handlerFunction={this.handleInputChange}
+            selectedOption={this.state.chaValue}
+          /></td>
+          <td>{this.props.selectedRaceDeets.charisma}</td>
+          <td></td>
+        </tr>
+      </table>
+
         <br/>
         <div className="button-group small-12 columns">
           <input className="button" type="submit" value="Submit" />

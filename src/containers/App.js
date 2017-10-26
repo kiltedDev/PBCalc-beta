@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Select from '../components/Select'
 import Reviews from '../components/Reviews'
 
-import restaurants from '../constants/restaurants'
+import statValues from '../constants/statValues'
 import raceStats from '../constants/raceStats'
 
 import PBCalcForm from '../components/PBCalcForm'
@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      restaurants,
+      statValues,
       raceStats,
       selectedRace: raceStats[0].race_name,
       strength: 0,
@@ -77,7 +77,8 @@ class App extends Component {
             <h2>Point Buy Calculator</h2>
             <PBCalcForm
             reviewSubmit={this.reviewSubmit}
-            restaurant_id={this.state.selectedId}
+            statValues={this.state.statValues}
+            selectedRaceDeets={selectedRaceDeets}
             />
           </div>
         </div>
