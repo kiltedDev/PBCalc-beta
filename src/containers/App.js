@@ -7,7 +7,6 @@ import statValues from '../constants/statValues'
 import raceStats from '../constants/raceStats'
 
 import PBCalcForm from '../components/PBCalcForm'
-import AddRestaurantForm from '../components/AddRestaurantForm'
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +14,7 @@ class App extends Component {
     this.state = {
       statValues,
       raceStats,
-      selectedRace: raceStats[0].race_name,
+      selectedRace: raceStats[0].name,
       strength: 0,
       constitution: 0,
       dexterity: 0,
@@ -23,8 +22,7 @@ class App extends Component {
       wisdom: 0,
       charisma: 0
     }
-    this.restaurantClick = this.restaurantClick.bind(this)
-    this.reviewSubmit = this.reviewSubmit.bind(this)
+    this.selectedRace = this.selectedRace.bind(this)
   }
 
   restaurantClick(event) {
@@ -32,15 +30,10 @@ class App extends Component {
     this.setState({selectedId: event.target.id})
   }
 
-  selectedRestaurant() {
-    return this.state.restaurants.find((restaurant) =>
-      (restaurant.id === this.state.selectedId)
+  selectedRace() {
+    return this.state.raceStats.find((race) =>
+      (race.name === this.state.selectedRace)
     )
-  }
-
-  reviewSubmit (submission) {
-    submission.restaurant_id = this.state.selectedRace
-    this.setState({ reviews: this.state.reviews.concat(submission) })
   }
 
   render() {
@@ -48,11 +41,11 @@ class App extends Component {
     let races = []
 
     raceStats.map((race) => {
-      races.push(race.race_name)
+      races.push(race.name)
     })
 
     let selectedRaceDeets = this.state.raceStats.find(race =>
-      race.race_name === this.state.selectedRace);
+      race.name === this.state.selectedRace);
 
     let stats = [
       "Strength",
@@ -65,9 +58,10 @@ class App extends Component {
 
     let wildcard = ""
 
-    if (selectedRaceDeets.wild) {
+    if (this.selectedRace().wild) {
       wildcard = <Select
-      stats = {stats}/>
+        stats = {stats}
+      />
     }
 
     return(
@@ -78,7 +72,7 @@ class App extends Component {
             <PBCalcForm
             reviewSubmit={this.reviewSubmit}
             statValues={this.state.statValues}
-            selectedRaceDeets={selectedRaceDeets}
+            selectedRaceDeets={this.selectedRace()}
             />
           </div>
         </div>

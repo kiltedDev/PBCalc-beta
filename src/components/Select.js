@@ -1,17 +1,16 @@
 import React from 'react';
-import statValues from '../constants/statValues'
 
 const Select = props => {
-  let optionElements = statValues.map(stat =>{
+  let optionElements = props.options.map(option =>{
     return (
-      <option key={stat.stat} value={stat.value}>{stat.stat}</option>
+      <option key={option.name} value={option.value}>{option.name}</option>
     );
   })
 
   return (
     <label className={props.className}>{props.label}
       <select name={props.name} value={props.selectedOption}  onChange={props.handlerFunction}>
-        <option value="0"></option>
+        <option value=""></option>
         {optionElements}
       </select>
     </label>
