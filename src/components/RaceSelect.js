@@ -32,12 +32,12 @@ debugger
         name='selectedStat'
         handlerFunction={this.props.handleStatChange}
         options={stats}
-        selectedOption={this.props.selectedRace.name}
+        selectedOption={this.state.selectedStat}
       />
     }
 
     return (
-      <div>
+      <div className="race-select-box">
         <h2>Select Race</h2>
         <Select
           name=''

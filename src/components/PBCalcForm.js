@@ -17,6 +17,7 @@ class PBCalcForm extends React.Component {
       wisdom: {name: 10, value: 0},
       charisma: {name: 10, value: 0},
       selectedRace: this.props.raceStats[0],
+      selectedStat: '',
       pointTotal: 0
     }
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -48,8 +49,10 @@ class PBCalcForm extends React.Component {
     selectedRace.wisdom = 0;
     selectedRace.charisma = 0;
     selectedRace[event.target.value] = 2;
+    debugger
     this.setState({
-      selectedRace: selectedRace
+      selectedRace: selectedRace,
+      selectedStat: event.target.value.charAt(0).toUpperCase() + event.target.value.slice(1)
     });
   }
 
@@ -96,6 +99,7 @@ class PBCalcForm extends React.Component {
           raceSelect={this.raceSelect}
           handleStatChange={this.handleStatChange}
           raceStats={this.props.raceStats}
+          selectedStat={this.state.selectedStat}
         />
         <table>
           <thead>

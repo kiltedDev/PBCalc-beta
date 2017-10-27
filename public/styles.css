@@ -11,5 +11,8 @@
 }
 
 select {
-  width: 25px;
+  width: 60px;
+}
+.race-select-box select {
+  width: 150px;
 }
