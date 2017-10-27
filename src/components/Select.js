@@ -8,8 +8,10 @@ const Select = props => {
   })
 
   return (
-    <label className={props.className}>{props.label}
-      <select name={props.name} value={props.selectedOption}  onChange={props.handlerFunction}>
+    <label className="small-2 columns">{props.label}
+      <select
+        name={props.name} value={props.selectedOption}  onChange={props.handlerFunction}
+      >
         <option value=""></option>
         {optionElements}
       </select>

@@ -1,6 +1,7 @@
 const raceStats = [
   {
-    race_name: '',
+    name: '',
+    value: '',
     wild: false,
     strength: 0,
     constitution: 0,
@@ -10,7 +11,8 @@ const raceStats = [
     charisma: 0
   },
   {
-    race_name: 'Dwarf',
+    name: 'Dwarf',
+    value: 'Dwarf',
     wild: false,
     strength: 0,
     constitution: 2,
@@ -21,7 +23,8 @@ const raceStats = [
   },
 
   {
-    race_name: 'Elf',
+    name: 'Elf',
+    value: 'Elf',
     wild: false,
     strength: 0,
     constitution: -2,
@@ -32,7 +35,8 @@ const raceStats = [
   },
 
   {
-    race_name: 'Gnome',
+    name: 'Gnome',
+    value: 'Gnome',
     wild: false,
     strength: -2,
     constitution: 2,
@@ -43,7 +47,8 @@ const raceStats = [
   },
 
   {
-    race_name: 'Half-Elf',
+    name: 'Half-Elf',
+    value: 'Half-Elf',
     wild: true,
     strength: 0,
     constitution: 0,
@@ -54,7 +59,8 @@ const raceStats = [
   },
 
   {
-    race_name: 'Half-Orc',
+    name: 'Half-Orc',
+    value: 'Half-Orc',
     wild: true,
     strength: 0,
     constitution: 0,
@@ -65,7 +71,8 @@ const raceStats = [
   },
 
   {
-    race_name: 'Halfling',
+    name: 'Halfling',
+    value: 'Halfling',
     wild: false,
     strength: -2,
     constitution: 0,
@@ -76,7 +83,8 @@ const raceStats = [
   },
 
   {
-    race_name: 'Human',
+    name: 'Human',
+    value: 'Human',
     wild: true,
     strength: 0,
     constitution: 0,

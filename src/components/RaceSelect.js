@@ -1,45 +1,54 @@
 import React from 'react';
-import Select from './Select'
+import Select from './Select';
 
-class ReviewForm extends React.Component {
+class RaceSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
-    }
-    this.handleInputChange = this.handleInputChange.bind(this);
+    };
   }
 
-  handleInputChange(event) {
-    let name = event.target.name
-    this.setState({
-      [name]: event.target.value
-    })
-  }
-
+debugger
   render() {
-    let errorDiv;
-    let errorItems;
-    if (Object.keys(this.state.errors).length > 0) {
-      errorItems = Object.values(this.state.errors).map(error => {
-        return(<li key={error}>{error}</li>)
-      })
-      errorDiv = <div className="callout alert">{errorItems}</div>
+    let wildCardSlot;
+
+    let stats = [
+      {name: "Strength",
+      value: "strength"},
+      {name: "Constitution",
+      value: "constitution"},
+      {name: "Dexterity",
+      value: "dexterity"},
+      {name: "Intelligence",
+      value: "intelligence"},
+      {name: "Wisdom",
+      value: "wisdom"},
+      {name: "Charisma",
+      value: "charisma"}]
+
+    if (this.props.selectedRace.wild) {
+      wildCardSlot =
+      <Select
+        name='selectedStat'
+        handlerFunction={this.props.handleStatChange}
+        options={stats}
+        selectedOption={this.props.selectedRace.name}
+      />
     }
 
     return (
-      <form onSubmit={this.handleFormSubmit}>
-      <h3>Select Race</h3>
-        {errorDiv}
-            <Select
-              name='strValue'
-              className="small-2 columns"
-              handlerFunction={this.handleInputChange}
-              selectedOption={this.state.strValue}
-            />
-      </form>
+      <div>
+        <h2>Select Race</h2>
+        <Select
+          name=''
+          handlerFunction={this.props.raceSelect}
+          options={this.props.raceStats}
+          selectedOption={this.props.selectedRace.name}
+        />
+        {wildCardSlot}
+      </div>
     );
   }
 }
 
-export default ReviewForm;
+export default RaceSelect;

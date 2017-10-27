@@ -1,5 +1,7 @@
 import React from 'react';
 import Select from './Select';
+import TableLine from './TableLine';
+import RaceSelect from './RaceSelect';
 import statValues from '../constants/statValues';
 
 
@@ -14,24 +16,51 @@ class ReviewForm extends React.Component {
       intelligence: {name: 10, value: 0},
       wisdom: {name: 10, value: 0},
       charisma: {name: 10, value: 0},
+      selectedRace: this.props.raceStats[0],
       pointTotal: 0
     }
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleStatChange = this.handleStatChange.bind(this);
+    this.raceSelect = this.raceSelect.bind(this);
   }
 
   handleInputChange(event) {
     let name = event.target.name;
+    let targetValue = parseInt(event.target.value)
     let newPointTotal = this.state.pointTotal;
     newPointTotal -= this.state[name].value;
-    newPointTotal += parseInt(event.target.value);
+    newPointTotal += targetValue;
     let newStat = statValues.find((stat) =>
-      (stat.value === parseInt(event.target.value))
-    )
+      (stat.value === targetValue)
+    );
     this.setState({
       [name]: newStat,
       pointTotal: newPointTotal
-    })
-    debugger
+    });
+  }
+
+  handleStatChange(event) {
+    let selectedRace = this.state.selectedRace;
+    selectedRace.strength = 0;
+    selectedRace.constitution = 0;
+    selectedRace.dexterity = 0;
+    selectedRace.intelligence = 0;
+    selectedRace.wisdom = 0;
+    selectedRace.charisma = 0;
+    selectedRace[event.target.value] = 2;
+    this.setState({
+      selectedRace: selectedRace
+    });
+  }
+
+  raceSelect(event) {
+    let newRace = this.props.raceStats.find((race) =>
+      (race.name === event.target.value)
+    );
+
+    this.setState({
+      selectedRace: newRace
+    });
   }
 
   render() {
@@ -43,10 +72,31 @@ class ReviewForm extends React.Component {
       })
       errorDiv = <div className="callout alert">{errorItems}</div>
     }
+
+    let stats = ["Strength", "Constitution", "Dexterity", "Intelligence", "Wisdom", "Charisma"]
+
+    let tableLines = stats.map((stat) => {
+      return(
+        <TableLine
+        key={stat}
+          name={stat}
+          attribute={this.state[stat.toLowerCase()]}
+          handlerFunction={this.handleInputChange}
+          raceMod={this.state.selectedRace[stat.toLowerCase()]}
+        />
+      )
+    })
+
     return (
       <form onSubmit={this.handleFormSubmit}>
       <h3>Calculate Stats</h3>
         {errorDiv}
+        <RaceSelect
+          selectedRace={this.state.selectedRace}
+          raceSelect={this.raceSelect}
+          handleStatChange={this.handleStatChange}
+          raceStats={this.props.raceStats}
+        />
         <table>
           <thead>
           <tr>
@@ -65,78 +115,7 @@ class ReviewForm extends React.Component {
           </tr>
           </tfoot>
           <tbody>
-          <tr>
-            <td>Strength</td>
-            <td><Select
-              name='strength'
-              className="small-2 columns"
-              handlerFunction={this.handleInputChange}
-              options={statValues}
-              selectedOption={this.state.strength.value}
-            /></td>
-            <td>{this.props.selectedRaceDeets.strength}</td>
-            <td>{this.state.strength.name + this.props.selectedRaceDeets.strength}</td>
-          </tr>
-          <tr>
-            <td>Constitution</td>
-            <td><Select
-              name='constitution'
-              className="small-2 columns"
-              handlerFunction={this.handleInputChange}
-              options={statValues}
-              selectedOption={this.state.constitution.value}
-            /></td>
-            <td>{this.props.selectedRaceDeets.constitution}</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Dexterity</td>
-            <td><Select
-              name='dexterity'
-              className="small-2 columns"
-              handlerFunction={this.handleInputChange}
-              options={statValues}
-              selectedOption={this.state.dexterity.value}
-            /></td>
-            <td>{this.props.selectedRaceDeets.dexterity}</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Intelligence</td>
-            <td><Select
-              name='intelligence'
-              className="small-2 columns"
-              handlerFunction={this.handleInputChange}
-              options={statValues}
-              selectedOption={this.state.intelligence.value}
-            /></td>
-            <td>{this.props.selectedRaceDeets.intelligence}</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Wisdom</td>
-            <td><Select
-              name='wisdom'
-              className="small-2 columns"
-              handlerFunction={this.handleInputChange}
-              options={statValues}
-              selectedOption={this.state.wisdom.value}
-            /></td>
-            <td>{this.props.selectedRaceDeets.wisdom}</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Charisma</td>
-            <td><Select
-              name='charisma'
-              className="small-2 columns"
-              handlerFunction={this.handleInputChange}
-              options={statValues}
-              selectedOption={this.state.charisma.value}
-            /></td>
-            <td>{this.props.selectedRaceDeets.charisma}</td>
-            <td></td>
-          </tr>
+            {tableLines}
           </tbody>
         </table>
       </form>
