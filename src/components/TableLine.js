@@ -5,7 +5,7 @@ import statValues from '../constants/statValues';
 const TableLine = (props) => {
 
   return (
-    <tr>
+    <tr id="stat">
       <td>{props.name}</td>
       <td><Select
         name={props.name.toLowerCase()}

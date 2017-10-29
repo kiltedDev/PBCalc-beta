@@ -11,6 +11,7 @@ class RaceSelect extends React.Component {
 debugger
   render() {
     let wildCardSlot;
+    let wildCardHead;
 
     let stats = [
       {name: "Strength",
@@ -27,26 +28,42 @@ debugger
       value: "charisma"}]
 
     if (this.props.selectedRace.wild) {
+      wildCardHead = <th>Select Stat</th>
       wildCardSlot =
       <Select
         name='selectedStat'
         handlerFunction={this.props.handleStatChange}
         options={stats}
         selectedOption={this.state.selectedStat}
+        className="attribute"
       />
     }
 
     return (
-      <div className="race-select-box">
-        <h2>Select Race</h2>
-        <Select
-          name=''
-          handlerFunction={this.props.raceSelect}
-          options={this.props.raceStats}
-          selectedOption={this.props.selectedRace.name}
-        />
-        {wildCardSlot}
-      </div>
+      <table className="race-select">
+        <thead>
+          <tr>
+            <th>Ability</th>
+            {wildCardHead}
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <Select
+              name='selectedRace'
+              handlerFunction={this.props.raceSelect}
+              options={this.props.raceStats}
+              selectedOption={this.props.selectedRace.name}
+              className="race"
+            />
+          </td>
+          <td>
+            {wildCardSlot}
+          </td>
+        </tr>
+        </tbody>
+      </table>
     );
   }
 }

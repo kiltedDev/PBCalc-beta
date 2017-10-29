@@ -49,7 +49,6 @@ class PBCalcForm extends React.Component {
     selectedRace.wisdom = 0;
     selectedRace.charisma = 0;
     selectedRace[event.target.value] = 2;
-    debugger
     this.setState({
       selectedRace: selectedRace,
       selectedStat: event.target.value.charAt(0).toUpperCase() + event.target.value.slice(1)
@@ -91,7 +90,7 @@ class PBCalcForm extends React.Component {
     })
 
     return (
-      <form onSubmit={this.handleFormSubmit}>
+      <form>
       <h3>Calculate Stats</h3>
         {errorDiv}
         <RaceSelect

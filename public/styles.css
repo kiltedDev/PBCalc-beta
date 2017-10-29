@@ -10,9 +10,24 @@
   margin-bottom: 20px;
 }
 
-select {
+#stat select {
   width: 60px;
 }
-.race-select-box select {
-  width: 150px;
+
+.race-select {
+  display: inline-block;
+}
+.race-select.race select {
+  width: 120px;
+}
+
+.race-select.attribute select{
+  width: 120px;
+}
+
+.race-select-box {
+}
+
+.clear {
+  clear:both;
 }
